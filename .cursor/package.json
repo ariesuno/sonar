@@ -1,0 +1,20 @@
+{
+  "name": "sonar-monorepo",
+  "private": true,
+  "packageManager": "pnpm@9",
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "infra/*"
+  ],
+  "scripts": {
+    "build": "pnpm -r --filter ./apps... run build",
+    "dev": "concurrently -n web,api \"pnpm --filter ./apps/web dev\" \"pnpm --filter ./apps/api start:dev\"",
+    "lint": "pnpm -r lint",
+    "test": "pnpm -r test",
+    "typecheck": "pnpm -r run typecheck"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  }
+}
