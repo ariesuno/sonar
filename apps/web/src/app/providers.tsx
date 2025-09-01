@@ -4,6 +4,8 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { useEffect, useState } from 'react';
 import { createQueryClient } from '@/lib/query';
+import { ChakraProvider } from '@chakra-ui/react';
+import { sunoTheme } from '@sonar/ui';
 
 export function Providers({ children }: { children: React.ReactNode }) {
     const [queryClient] = useState(() => createQueryClient());
@@ -16,7 +18,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
     return (
         <QueryClientProvider client={queryClient}>
-            {children}
+            <ChakraProvider theme={sunoTheme}>
+                {children}
+            </ChakraProvider>
             {process.env.NODE_ENV === 'development' && (
                 <ReactQueryDevtools initialIsOpen={false} />
             )}
