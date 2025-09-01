@@ -1,0 +1,22 @@
+{
+  "name": "sonar",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:all": "concurrently \"pnpm --filter @sonar/web dev\" \"pnpm --filter @sonar/api dev\"",
+    "dev:web": "pnpm --filter @sonar/web dev",
+    "dev:api": "pnpm --filter @sonar/api dev",
+    "build:web": "pnpm --filter @sonar/web build",
+    "lint": "pnpm -r lint",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -r test",
+    "format": "pnpm -r format"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.1"
+  }
+}
