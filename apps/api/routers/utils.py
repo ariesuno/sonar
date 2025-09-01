@@ -1,5 +1,7 @@
 import base64
 import json
+import os
+from pathlib import Path
 
 
 def decode_scope(header: str | None):
@@ -12,17 +14,18 @@ def decode_scope(header: str | None):
         return None
 
 
-users = [
-    {"id": "u-mgmt", "name": "Gestora", "role": "GESTAO"},
-    {"id": "u-tl-1", "name": "TL Norte", "role": "TEAM_LEADER", "teamId": "t-norte"},
-    {"id": "u-tl-2", "name": "TL Sul", "role": "TEAM_LEADER", "teamId": "t-sul"},
-    *[{"id": f"u-cons-{i+1}", "name": f"Consultor {i+1}", "role": "CONSULTOR", "teamId": "t-norte" if i < 3 else "t-sul"} for i in range(6)],
-]
+def load_json_data(filename: str):
+    """Load data from storage JSON files"""
+    storage_path = Path(__file__).parent.parent / "storage" / filename
+    try:
+        with open(storage_path, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return []
 
 
-clients = [
-    {"id": f"c-{i+1}", "name": f"Cliente {i+1}", "ownerId": f"u-cons-{(i % 6) + 1}"}
-    for i in range(30)
-]
+# Load data from JSON files
+users = load_json_data("users.json")
+clients = load_json_data("clients.json")
 
 
